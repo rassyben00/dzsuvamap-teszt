@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/headerScript')%>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/css/infowindow.css" />
+  <link rel="stylesheet" type="text/css" href="/css/marker.css" />
+  <link rel="stylesheet" type="text/css" href="/css/mainDesign.css" />
+  <link rel="stylesheet" type="text/css" href="/css/navigation.css" />
+  <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+  <link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+  <title>Dzsuvamap</title>
+
+</head>
+<body>
+
+  <%- include('partials/navigation')%>
+
+<div id="map-container">
+  <div id="map"></div>
+  <div class="selectedPlace"></div>
+</div>
+
+  <footer>
+    <%- include('partials/footer')%>
+  </footer>
+
+  <script>
+    let openInfoWindow = null;
+    let map;
+    const markers = [];
+    const mapStyles=[
+    {
+      "featureType": "all",
+      "elementType": "all",
+      "stylers": [
+          {
+              "saturation": "32"
+          },
+          {
+              "lightness": "-3"
+          },
+          {
+              "visibility": "on"
+          },
+          {
+              "weight": "1.18"
+          }
+      ]
+  },
+  {
+      "featureType": "administrative",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "landscape",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "landscape.man_made",
+      "elementType": "all",
+      "stylers": [
+          {
+              "saturation": "-70"
+          },
+          {
+              "lightness": "14"
+          }
+      ]
+  },
+  {
+      "featureType": "poi",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "road",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "transit",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "water",
+      "elementType": "all",
+      "stylers": [
+          {
+              "saturation": "100"
+          },
+          {
+              "lightness": "-14"
+          }
+      ]
+  },
+  {
+      "featureType": "water",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          },
+          {
+              "lightness": "12"
+          }
+      ]
+  }
+]
+
+    async function initMap() {
+      const { Map, InfoWindow } = google.maps;
+
+      function resetMarkers() {
+        markers.forEach((markerData) => {
+          markerData.marker.setIcon({
+            url: '/images/red_marker.png', // Replace with your custom marker icon path
+            scaledSize: new google.maps.Size(32, 32), // Adjust the size if needed
+          }); // Reset marker icon to default
+  });
+}
+
+    map = new Map(document.getElementById('map'), {
+      center: { lat: 47.5, lng: 19.1 },
+      zoom: 11,
+      minZoom:2.5,
+      disableDefaultUI: true,
+      styles: mapStyles,
+    });
+    let icon={
+      url: '/images/red_marker.png',
+            scaledSize: new google.maps.Size(32,32)
+    }
+    // Adding markers for each place
+    
+    <% places.forEach(place => { %>
+      <%if(place.isVisible){%>
+      const marker<%= place.id %> = new google.maps.Marker({
+        position: { lat: <%= place.latitude %>, lng: <%= place.longitude %> },
+        map: map,
+        title: '<%= place.placename %>',
+        icon:icon,
+      });
+    
+      markers.push({ id: <%= place.id %>, marker: marker<%= place.id %> });
+      const infoWindow<%= place.id %> = new google.maps.InfoWindow({
+        content: `<strong>Hely neve:</strong> <%= place.placename %><br>
+                  <strong>Leírás:</strong> <%= place.description %><br> 
+                  <strong>Ár:</strong> <%= place.cost %><br> 
+                  <strong>Dátum:</strong> <%= place.date %>`,
+      });
+
+      marker<%= place.id %>.addListener('click', () => {
+      resetMarkers();
+        const selectedPlaceElement = document.querySelector('.selectedPlace');
+    selectedPlaceElement.innerHTML = 
+                  `<div class="placeDetail"><div class="detailLabel"><strong>Hely neve:</strong></div><div class="detailValue"><%= place.placename %></div></div><hr>
+                  <div class="placeDetail"><div class="detailLabel"><strong>Leírás:</strong></div><div class="detailValue"><%= place.description %></div></div><hr>
+                  <div class="placeDetail"><div class="detailLabel"><strong>Ár:</strong></div><div class="detailValue"><%= place.cost %></div></div><hr>
+                  <div class="placeDetail"><div class="detailLabel"><strong>Dátum:</strong></div><div class="detailValue"><%= place.date %></div></div><hr>`;
+    if (openInfoWindow) {
+          openInfoWindow.close();
+        }
+        marker<%= place.id %>.setIcon({
+            url: '/images/blue_marker.png', // Replace with your custom marker icon path
+            scaledSize: new google.maps.Size(32, 32), // Adjust the size if needed
+          });
+
+    infoWindow<%= place.id %>.open(map, marker<%= place.id %>);
+    openInfoWindow = infoWindow<%= place.id %>;
+      });
+      <%}%>
+    <% }); %>
+    
+     google.maps.event.addListener(map, 'click', () => {
+        resetMarkers();
+        
+        if (openInfoWindow) {
+          
+          openInfoWindow.close();
+          openInfoWindow = null;
+        }
+        const selectedPlaceElement = document.querySelector('.selectedPlace');
+        selectedPlaceElement.innerHTML = '';
+      });
+  }
+    </script>
+</body>
+</html>

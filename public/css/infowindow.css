@@ -1,0 +1,26 @@
+/* style.css */
+
+.info-window {
+    max-width: 250px;
+    text-align: center;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-window h3 {
+    color: #333;
+    margin: 0 0 10px;
+  }
+  
+  .info-window p {
+    color: #666;
+    margin: 0 0 5px;
+  }
+  
+  .info-window strong {
+    color: #333;
+  }
+  

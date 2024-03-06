@@ -1,0 +1,58 @@
+<!-- views/about.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="/css/navigation.css" />
+  <link rel="stylesheet" type="text/css" href="/css/mainDesign.css" />
+  <link rel="stylesheet" type="text/css" href="/css/form.css" />
+  <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+
+  <title>Feltöltés</title>
+</head>
+<body>
+
+  <%- include('partials/navigation')%>
+
+  <h1>Hely feltöltése</h1>
+
+  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero et magni, tenetur nihil voluptatibus eos exercitationem quasi minima dolore consequatur? Illo, cupiditate recusandae minus ut est accusantium fugiat deleniti at.</p>
+
+  <form id="addPlaceForm" action="/addPlace" method="post">
+    <label>
+      <input type="hidden" name="id" id="placeId">
+      <strong>Hely neve:</strong>
+      <input type="text" name="placename" required>
+    </label>
+    <label>
+      <strong>Leírás:</strong>
+      <input type="text" name="description" required>
+    </label>
+    <label>
+      <strong>Longitude:</strong>
+      <input type="number" name="longitude" step="any" min="-180" max="180" title="between -180 and 180" required>
+    </label>
+    <label>
+      <strong>Latitude:</strong>
+      <input type="number" name="latitude" step="any" min="-90" max="90" title="between -90 and 90" required>
+    </label>
+    <label>
+      <strong>Ár:</strong>
+      <input type="number" name="cost" required>
+    </label>
+    <label>
+      <strong>Dátum:</strong>
+      <input type="date" name="date" required>
+    </label>
+    <button type="submit">Hely hozzáadása</button>
+  </form>
+  
+  <footer>
+
+  </footer>
+    <%- include('partials/footer')%>
+</body>
+</html>

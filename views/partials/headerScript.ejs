@@ -1,0 +1,8 @@
+<!--js header implementation here-->
+
+<script>  
+    document.addEventListener('DOMContentLoaded', () => {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap`;
+    document.head.appendChild(script);});
+  </script>

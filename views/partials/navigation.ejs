@@ -1,0 +1,14 @@
+<div id="logo-container">
+    <img src="/images/gyros.png" alt="Gyros Logo" id="gyros-logo">
+    <h1 id="title">DZSUVAMAP</h1>
+  </div>
+
+  <nav class="main-nav">
+    <ul class="menu-list">
+      <% menuItems.forEach(item => { %>
+        <li class="menu-item">
+          <a href="<%= item.url %>" class="menu-link"><%= item.name %></a>
+        </li>
+      <% }) %>
+    </ul>
+  </nav>

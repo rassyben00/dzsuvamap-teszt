@@ -1,0 +1,110 @@
+/* style.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+  }
+
+  #header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333;
+    color: #fff;
+    margin: 0;
+  }
+  
+  #logo-container {
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  }
+
+  #gyros-logo {
+    width: 50px; /* Adjust the width as needed */
+    margin-right: 10px; /* Add margin between the image and text */
+  }
+
+  h1 {
+    text-align: center;
+    padding: 20px 0;
+    color: #fff;
+    margin: 0;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+  }
+  
+  li {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  #map-container {
+    overflow: hidden; /* Clear the float */
+    margin: 20px; 
+  }
+  
+  #map {
+    height: 475px;
+    width: 80%; /* Adjust the width as needed */
+    float: left;
+  }
+  
+/* style.css */
+
+.selectedPlace {
+  width: 18%; /* Adjust the width as needed */
+  margin-left: 2%; /* Adjust the margin as needed */
+  float: left;
+  height: 475px; /* Set the height to match the map height */
+  background-color: #fff;
+
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selectedPlace strong {
+  color: #333; /* Set text color */
+}
+
+/* mainDesign.css */
+
+.placeDetail {
+  background-color: #fff;
+  padding: 15px;
+  margin: 10px;
+}
+
+.detailLabel {
+  color: #333;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.detailValue {
+  color: #555;
+  /* Add styling for dynamic values */
+}
+
+/* Add more styles as needed */
+
+
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}

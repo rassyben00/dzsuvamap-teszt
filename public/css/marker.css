@@ -1,0 +1,19 @@
+/* marker.css */
+
+/* Style for custom markers */
+.marker-icon {
+    width: 30px; /* Adjust the width of the marker */
+    height: 30px; /* Adjust the height of the marker */
+    background-color: #3498db; /* Set background color if needed */
+    border-radius: 50%; /* Create a circular shape */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+  }
+  
+  /* Style for marker label (if applicable) */
+  .marker-label {
+    color: #fff; /* Text color */
+    font-size: 12px; /* Font size of the label */
+    text-align: center; /* Center the label text */
+    line-height: 30px; /* Vertical centering for the label */
+  }
+  
