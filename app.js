@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const path = require('path');
 const dotenv = require('dotenv');
 const placesRouter = require('./router/placesRouter');
 const uploadRouter = require('./router/uploadRouter');

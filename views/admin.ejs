@@ -29,12 +29,16 @@
             <strong>Date:</strong> <%= place.date %>
             <label>
               <strong>Visibility:</strong>
-              <input type="checkbox" id="visibilityCheckbox<%= place.id %>" <% if (place.isVisible) { %>checked<% } %> onchange="toggleVisibility(<%= place.id %>)" />
+              <form action="/updateVisibility" method="post">
+                <input type="hidden" name="placeId" value="<%= place.id %>">
+                <input type="checkbox" value="<%=place.isVisible%>" id="visibilityCheckbox<%= place.id %>" <% if (place.isVisible) { %>checked<% } %>
+                 />
+                 <button type="submit">submit</button>
+              </form>
             </label>
           </li>
         <% }); %>
       </ul>
       <%- include('partials/footer')%>
-      <script src="/js/toggle.js"></script>
 </body>
 </html>

@@ -1,23 +1,30 @@
 const menuItems = require('./menuItemController'); // Import menu items
 const data = require('../data/data.json');
+const mongoose=require('mongoose');
+const dbURI="mongodb+srv://bencici:TheSimpleMan2002@dzsuvamap.um4aspg.mongodb.net/";
+const data2=require('../models/data')
 
-exports.getAdmin = (req, res) => {
-  res.render('admin', { menuItems,places: data });
+mongoose.connect(dbURI).then((result)=>console.log("Admin site connected to DB"))
+
+
+exports.getAdmin = async(req, res) => {
+  const allPlaces= await data2.find();
+  res.render('admin', { menuItems,places: allPlaces });
 };
 
-exports.updateVisibility = (req, res) => {
-  const { id, isVisible } = req.body;
+exports.updateVisibility = async(req, res) => {
+  const places = await data2.find();
 
-  const updatedData = data.map(place => {
-    if (place.id === id) {
-      place.isVisible = isVisible;
+  const updatedData=places.map(place=>{
+    if(place.id==req.body.placeId){
+      place.isVisible=!place.isVisible;
     }
-    return place;
-  });
+    return place})
+    
+    const savePromises = updatedData.map(async (place) => await place.save());
+    await Promise.all(savePromises);
 
-  fs.writeFileSync('./data/data.json', JSON.stringify(updatedData, null, 2));
-
-  res.sendStatus(200);
+  res.redirect('/admin');
 };
 
 exports.logout = (req, res) => {
