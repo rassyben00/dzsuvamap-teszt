@@ -10,9 +10,22 @@ const data2=require('../models/data')
 
 mongoose.connect(dbURI).then((result)=>console.log("Map site connected to DB"))
 
-function generateUniqueId() {
-  return data.length > 0 ? Math.max(...data.map(place => place.id)) + 1 : 1;
+//function generateUniqueId() {
+ // return data2.length > 0 ? Math.max(...data2.map(place => place.id)) + 1 : 1;
+//}
+
+async function generateUniqueId() {
+  try {
+    const maxId = await data2.findOne({}, { id: 1 }, { sort: { id: -1 } });
+    return maxId ? maxId.id + 1 : 1;
+  } catch (error) {
+    console.error('Error generating unique ID:', error);
+    return null;
+  }
 }
+
+
+
 
 exports.getIndex = async(req, res) => {
   const allPlaces = await data2.find();
@@ -40,9 +53,9 @@ exports.updateVisibility = async(req, res) => {
 
 
 exports.addPlace = async(req, res) => {
-  const newPlace = req.body;
+  const newPlaceId = await generateUniqueId();
   const newPlace2=new data2({
-    id: generateUniqueId(),
+    id: newPlaceId,
     placename: req.body.placename,
     description: req.body.description,
     longitude: req.body.longitude,
