@@ -56,6 +56,8 @@ body {
   }
   
   #map-container {
+      position: relative; /* Ensure the map container is positioned relative */
+    
     overflow: hidden; /* Clear the float */
     margin: 20px; 
   }
@@ -81,6 +83,43 @@ body {
 
 .selectedPlace strong {
   color: #333; /* Set text color */
+}
+
+.addPlace {
+  width: 18%; /* Adjust the width as needed */
+  margin-left: 2%; /* Adjust the margin as needed */
+  float: left;
+  height: 85vh; /* Set the height to match the map height */
+  background-color: #fff;
+
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#searchInput {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  left: 10px; /* Adjust the left position as needed */
+  z-index: 1000; /* Ensure it's above the map */
+  margin-top: 0; /* Remove any margin */
+  margin-left: 0; /* Remove any margin */
+  padding: 10px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  width: 350px;
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+/* Style for the input field when focused */
+#searchInput:focus {
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* Placeholder style */
+::placeholder {
+  color: #999;
 }
 
 /* mainDesign.css */
@@ -122,6 +161,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   /* ... (existing styles for other elements) */
 
   #map-container {
+    
     /* Adjust the map container styles for smaller screens */
     overflow: hidden;
     margin: 20px;
@@ -142,5 +182,8 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     height: auto; /* Auto height to accommodate content */
   }
 
+  #searchInput{
+    width:300px;
+  }
   /* ... (other styles for smaller screens) */
 }

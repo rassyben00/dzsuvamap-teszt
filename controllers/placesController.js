@@ -10,10 +10,6 @@ const data2=require('../models/data')
 
 mongoose.connect(dbURI).then((result)=>console.log("Map site connected to DB"))
 
-//function generateUniqueId() {
- // return data2.length > 0 ? Math.max(...data2.map(place => place.id)) + 1 : 1;
-//}
-
 async function generateUniqueId() {
   try {
     const maxId = await data2.findOne({}, { id: 1 }, { sort: { id: -1 } });
@@ -23,8 +19,6 @@ async function generateUniqueId() {
     return null;
   }
 }
-
-
 
 
 exports.getIndex = async(req, res) => {

@@ -2,7 +2,7 @@
 
 #addPlaceForm {
   max-width: 400px;
-  margin: 20px auto;
+  margin:  auto;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -40,3 +40,97 @@
   background-color: #45a049;
 }
 
+.description {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.description p {
+  margin-bottom: 10px;
+}
+
+.description ol {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.description ol li {
+  list-style-type: decimal;
+  margin-bottom: 5px;
+}
+
+.feltoltes {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 2.5rem; /* Larger font size */
+  color: #2c3e50; /* Dark blue color */
+  font-weight: bold; /* Bold font weight */
+}
+
+@media only screen and (max-width: 1024px) {
+  /* ... (existing styles for other elements) */
+
+  #map-container {
+    
+    /* Adjust the map container styles for smaller screens */
+    overflow: hidden;
+    margin: 20px;
+  }
+
+  #map {
+    /* Adjust the map styles for smaller screens */
+    height: 65vh; /* Adjust the height as needed */
+    width: 100%; /* Take up the full width of the container */
+    float: none; /* Reset the float */
+  }
+
+  .addPlace {
+    width: 100%;
+    margin: 20px 0;
+    float: none;
+    height: auto;
+  }
+
+  /* New styles for screens under 1024px */
+  #addPlaceForm {
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #addPlaceForm label {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  #addPlaceForm strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  #addPlaceForm input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #addPlaceForm button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #addPlaceForm button:hover {
+    background-color: #45a049;
+  }
+}

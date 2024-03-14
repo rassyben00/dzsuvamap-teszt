@@ -6,53 +6,173 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <%- include('partials/headerScript')%>
+
+  <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="/css/navigation.css" />
   <link rel="stylesheet" type="text/css" href="/css/mainDesign.css" />
   <link rel="stylesheet" type="text/css" href="/css/form.css" />
   <link rel="stylesheet" type="text/css" href="/css/footer.css" />
 
-  <title>Feltöltés</title>
+  <title >Feltöltés</title>
 </head>
 <body>
 
   <%- include('partials/navigation')%>
 
-  <h1>Hely feltöltése</h1>
+  <h1 class="feltoltes">Hely feltöltése</h1>
 
-  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero et magni, tenetur nihil voluptatibus eos exercitationem quasi minima dolore consequatur? Illo, cupiditate recusandae minus ut est accusantium fugiat deleniti at.</p>
+  <div class="description">
+    <p>A dzsuvahelyet 3 különböző módon is megkeresheted:</p>
+    <ol>
+      <li>A keresés mező segítségével megkeresheted a címet.</li>
+      <li>Ha ez nem sikerülne, a térképen manuálisan megkeresheted a helyet, majd a bal klikk segítségével hozzáadhatod a dzsuvázódat.</li>
+      <li>Ha esetleg ez se működne, hozzáadhatod a dzsuvahelyet a szélességi- és hosszúsági fokok (latitude,longitude) segítségével.</li>
+    </ol>
+    <p>Kérlek ezek után töltsd ki a leírást, illetve az árat is.</p>
+  </div>
 
-  <form id="addPlaceForm" action="/addPlace" method="post">
-    <label>
-      <input type="hidden" name="id" id="placeId">
-      <strong>Hely neve:</strong>
-      <input type="text" name="placename" required>
-    </label>
-    <label>
-      <strong>Leírás:</strong>
-      <input type="text" name="description" required>
-    </label>
-    <label>
-      <strong>Longitude:</strong>
-      <input type="number" name="longitude" step="any" min="-180" max="180" title="between -180 and 180" required>
-    </label>
-    <label>
-      <strong>Latitude:</strong>
-      <input type="number" name="latitude" step="any" min="-90" max="90" title="between -90 and 90" required>
-    </label>
-    <label>
-      <strong>Ár:</strong>
-      <input type="number" name="cost" required>
-    </label>
-    <label>
-      <strong>Dátum:</strong>
-      <input type="date" name="date" required>
-    </label>
-    <button type="submit">Hely hozzáadása</button>
-  </form>
+  <div id="map-container">
+    <div id="map"></div>
+    <input id="searchInput" type="text" maxlength="50" placeholder="Add hozzá kedvenc dzsuvázódat: ">
+
+    <div class="addPlace">
+      <form id="addPlaceForm" action="/addPlace" method="post">
+        <label>
+          <input type="hidden" name="id" id="placeId">
+          <strong>Hely neve:</strong>
+          <input id="placename" type="text" name="placename" required>
+        </label>
+        <label>
+          <strong>Leírás:</strong>
+          <input type="text" name="description" required>
+        </label>
+        <label>
+          <strong>Longitude:</strong>
+          <input value="19.0402" type="number" id="longitude" name="longitude" step="any" min="-180" max="180" title="between -180 and 180" required>
+        </label>
+        <label>
+          <strong>Latitude:</strong>
+          <input value="47.4979" type="number" id="latitude" name="latitude" step="any" min="-90" max="90" title="between -90 and 90" required>
+        </label>
+        <label>
+          <strong>Ár:</strong>
+          <input type="number" name="cost" required>
+        </label>
+        <label>
+          <strong>Dátum:</strong>
+          <input type="date" id="date" name="date" required>
+        </label>
+        <button type="submit">Hely hozzáadása</button>
+      </form>
+    </div>
+  </div>
+
+ 
   
   <footer>
-
-  </footer>
     <%- include('partials/footer')%>
+  </footer>
+  <script>
+    document.getElementById('date').valueAsDate = new Date();
+
+// Set max date to today to prevent selecting future dates
+document.getElementById('date').setAttribute('max', new Date().toISOString().split('T')[0]);
+    var map;
+    var marker;
+
+    async function initMap() {
+        const { Map } = google.maps;
+
+        const response = await fetch('/mapStyle/mapStyle.json');
+        const mapStyles = await response.json();
+
+        map = new Map(document.getElementById('map'), {
+            center: { lat: 47.4979, lng: 19.0402 }, // Budapest
+            zoom: 11,
+            minZoom: 2.5,
+            disableDefaultUI: true,
+            styles: mapStyles,
+        });
+
+        // Add initial marker at Budapest
+        addMarker({ lat: 47.4979, lng: 19.0402 });
+
+        var input = document.getElementById('searchInput');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                console.log("Place details not found for the input: '" + place.name + "'");
+                return;
+            }
+
+            // Update marker position
+            updateMarker(place.geometry.location);
+
+            // Update form inputs
+            document.getElementById('latitude').value = place.geometry.location.lat();
+            document.getElementById('longitude').value = place.geometry.location.lng();
+            document.getElementById('placename').value = place.name; // Set location name
+
+            // Handle the selected place (e.g., get place details)
+            console.log("Latitude:", place.geometry.location.lat());
+            console.log("Longitude:", place.geometry.location.lng());
+        });
+
+        map.addListener('click', function (event) {
+            // Update marker position on map click
+            updateMarker(event.latLng);
+
+            // Update form inputs
+            document.getElementById('latitude').value = event.latLng.lat();
+            document.getElementById('longitude').value = event.latLng.lng();
+            document.getElementById('placename').value = ''; // Clear location name for map click
+        });
+
+        // Update marker position when latitude or longitude input fields change
+        document.getElementById('latitude').addEventListener('input', function () {
+            updateMarker({ lat: parseFloat(this.value), lng: parseFloat(document.getElementById('longitude').value) });
+            clearPlacename();
+        });
+
+        document.getElementById('longitude').addEventListener('input', function () {
+            updateMarker({ lat: parseFloat(document.getElementById('latitude').value), lng: parseFloat(this.value) });
+            clearPlacename();
+        });
+
+        function clearPlacename() {
+            // Clear placename input field
+            document.getElementById('placename').value = '';
+        }
+    }
+
+    function addMarker(location) {
+        // Remove previous marker if exists
+        if (marker) {
+            marker.setMap(null);
+        }
+
+        // Add marker to the location
+        marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    }
+
+    function updateMarker(location) {
+        // Update marker position
+        if (!marker) {
+            addMarker(location);
+        } else {
+            marker.setPosition(location);
+        }
+
+    }
+</script>
+
+
+
 </body>
 </html>
