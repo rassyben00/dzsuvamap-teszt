@@ -74,9 +74,9 @@ body {
   width: 18%; /* Adjust the width as needed */
   margin-left: 2%; /* Adjust the margin as needed */
   float: left;
-  height: 130vh; /* Set the height to match the map height */
+  max-height: 70vh;
   background-color: #fff;
-
+  overflow:auto;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -84,6 +84,31 @@ body {
 .selectedPlace strong {
   color: #333; /* Set text color */
 }
+
+/* Style the scrollbar for the .selectedPlace container */
+.selectedPlace::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+  
+}
+
+.selectedPlace::-webkit-scrollbar-horizontal {
+  display: none; /* Set the width of the vertical scrollbar */
+}
+
+.selectedPlace::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Set the background color of the scrollbar track */
+}
+
+.selectedPlace::-webkit-scrollbar-thumb {
+  background: #888; /* Set the color of the scrollbar thumb */
+  border-radius: 5px; /* Set the border radius of the scrollbar thumb */
+}
+
+.selectedPlace::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Set the color of the scrollbar thumb on hover */
+}
+
+
 
 .addPlace {
   width: 18%; /* Adjust the width as needed */
