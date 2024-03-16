@@ -8,5 +8,6 @@ router.get('/', placesController.getIndex);
 
 router.post('/updateVisibility', placesController.updateVisibility);
 router.post('/addPlace', placesController.addPlace);
+router.post('/add-comment/:markerId', placesController.addComment);
 
 module.exports = router;

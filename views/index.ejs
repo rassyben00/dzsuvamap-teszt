@@ -40,8 +40,7 @@
 
       const response = await fetch('/mapStyle/mapStyle.json');
       const mapStyles = await response.json();
-
-
+      
       map = new Map(document.getElementById('map'), {
       center: { lat: 47.5, lng: 19.1 },
       zoom: 11,
@@ -80,7 +79,7 @@
         content: `<strong>Hely neve:</strong> <%= place.placename %><br>
                   <strong>Leírás:</strong> <%= place.description %><br> 
                   <strong>Ár:</strong> <%= place.cost %><br> 
-                  <strong>Dátum:</strong> <%= place.date %>`,
+                  <strong>Dátum:</strong> <%= new Date(place.date).toISOString().split('T')[0].replace(/-/g, '.') %>`,
       });
 
       marker<%= place.id %>.addListener('click', () => {
@@ -90,7 +89,19 @@
                   `<div class="placeDetail"><div class="detailLabel"><strong>Hely neve:</strong></div><div class="detailValue"><%= place.placename %></div></div><hr>
                   <div class="placeDetail"><div class="detailLabel"><strong>Leírás:</strong></div><div class="detailValue"><%= place.description %></div></div><hr>
                   <div class="placeDetail"><div class="detailLabel"><strong>Ár:</strong></div><div class="detailValue"><%= place.cost %></div></div><hr>
-                  <div class="placeDetail"><div class="detailLabel"><strong>Dátum:</strong></div><div class="detailValue"><%= place.date %></div></div><hr>`;
+                  <div class="placeDetail"><div class="detailLabel"><strong>Dátum:</strong></div><div class="detailValue"><%= new Date(place.date).toISOString().split('T')[0].replace(/-/g, '.') %></div></div><hr>               
+                  <div class="placeDetail"><div class="detailLabel"><strong>Kommentek:</strong>
+                    <ul id="commentsList">
+                    <% comments.forEach(comment => { %>
+                      <% if(comment.markerId === place.id) { %>
+                        <li><%= comment.text %></li>
+                      <% } %>
+                    <% }) %>
+                  </ul></div></div><hr>
+                  <form action="/add-comment/<%= place.id %>" method="post" class="commentForm">
+                    <input type="text" name="text" placeholder="Írj megjegyzést">
+                    <button type="submit">Megjegyzés közzététele</button>
+                  </form>`;
     if (openInfoWindow) {
           openInfoWindow.close();
         }

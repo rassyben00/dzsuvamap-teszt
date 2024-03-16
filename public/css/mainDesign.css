@@ -59,7 +59,7 @@ body {
       position: relative; /* Ensure the map container is positioned relative */
     
     overflow: hidden; /* Clear the float */
-    margin: 20px; 
+    margin: 10px; 
   }
   
   #map {
@@ -74,7 +74,7 @@ body {
   width: 18%; /* Adjust the width as needed */
   margin-left: 2%; /* Adjust the margin as needed */
   float: left;
-  height: 70vh; /* Set the height to match the map height */
+  height: 130vh; /* Set the height to match the map height */
   background-color: #fff;
 
   border-radius: 8px;
@@ -126,8 +126,8 @@ body {
 
 .placeDetail {
   background-color: #fff;
-  padding: 15px;
-  margin: 10px;
+  padding: 10px;
+  margin: 5px;
 }
 
 .detailLabel {
@@ -154,6 +154,37 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 .gmnoprint div {
     background:none !important;
 }
+.commentForm {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commentForm input[type="text"] {
+  width: 90%; /* Adjust width based on your design */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.commentForm button[type="submit"] {
+  width: 90%; /* Adjust width based on your design */
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin:4px;
+}
+
+.commentForm button[type="submit"]:hover {
+  background-color: #45a049;
+}
 
 
 /* Add this media query to style the page for phones */
@@ -164,7 +195,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     
     /* Adjust the map container styles for smaller screens */
     overflow: hidden;
-    margin: 20px;
+    margin: 10px;
   }
 
   #map {

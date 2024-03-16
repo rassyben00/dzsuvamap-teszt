@@ -6,9 +6,31 @@ const menuItems = require('./menuItemController');
 const fs = require('fs');
 const mongoose=require('mongoose');
 const dbURI="mongodb+srv://bencici:TheSimpleMan2002@dzsuvamap.um4aspg.mongodb.net/";
+const DBCommentsURI="mongodb+srv://bencici:TheSimpleMan2002@comments.um4aspg.mongodb.net/";
 const data2=require('../models/data')
+const comments=require('../models/comments')
 
 mongoose.connect(dbURI).then((result)=>console.log("Map site connected to DB"))
+//mongoose.connect(DBCommentsURI).then((result)=>console.log("Map site comments connected to DB"))
+
+const dbComments = mongoose.createConnection(DBCommentsURI, { useNewUrlParser: true, useUnifiedTopology: true });
+dbComments.on('error', err => console.error("Error connecting to comments database:", err));
+dbComments.once('open', () => console.log("Map site comments connected to DB"));
+
+
+exports.addComment = async (req, res) => {
+  const { markerId } = req.params;
+  const { text } = req.body;
+ 
+  try {
+    const newComment = new comments({ markerId, text });
+    await newComment.save();
+    res.redirect('/');
+  } catch (err) {
+    console.error('Error adding comment:', err);
+    res.status(500).send('Error adding comment');
+  }
+};
 
 async function generateUniqueId() {
   try {
@@ -20,13 +42,11 @@ async function generateUniqueId() {
   }
 }
 
-
 exports.getIndex = async(req, res) => {
   const allPlaces = await data2.find();
+  const allComments = await comments.find()
 
-    //res.json(data);
-    //console.log(allPlaces)
-  res.render('index', { apiKey: `${process.env.API_KEY}`, places: allPlaces, menuItems});
+  res.render('index', { apiKey: `${process.env.API_KEY}`, places: allPlaces, comments: allComments, menuItems});
 };
 
 
@@ -45,6 +65,11 @@ exports.updateVisibility = async(req, res) => {
   res.redirect('/admin');
 };
 
+const options = {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+};
 
 exports.addPlace = async(req, res) => {
   const newPlaceId = await generateUniqueId();
@@ -60,11 +85,6 @@ exports.addPlace = async(req, res) => {
   })
 
   await newPlace2.save();
-
-  //newPlace.id = generateUniqueId();
-  //data.push(newPlace);
-  //fs.writeFileSync('./data/data.json', JSON.stringify(data, null, 2));
-
   res.redirect("/");
 };
 
