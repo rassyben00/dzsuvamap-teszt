@@ -1,6 +1,5 @@
-require('dotenv').config();
 // controllers/authController.js
-
+require('dotenv').config();
 
 const users = [
     { username: `${process.env.UNAME}`, password: `${process.env.PW}` }

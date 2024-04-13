@@ -1,10 +1,9 @@
 const menuItems = require('./menuItemController'); // Import menu items
-const data = require('../data/data.json');
 const mongoose=require('mongoose');
 const dbURI="mongodb+srv://bencici:TheSimpleMan2002@dzsuvamap.um4aspg.mongodb.net/";
 const data2=require('../models/data')
 
-mongoose.connect(dbURI).then((result)=>console.log("Admin site connected to DB"))
+mongoose.connect(dbURI).then((result)=>console.log("ADMIN site connected to MARKER DB"))
 
 
 exports.getAdmin = async(req, res) => {

@@ -21,7 +21,7 @@ body {
     color: #fff;
     margin: 0;
   }
-  
+    
   #logo-container {
     background-color: #333;
     display: flex;
@@ -63,18 +63,21 @@ body {
   }
   
   #map {
-    height: 70vh;
-    width: 80%; /* Adjust the width as needed */
+    height: 75vh;
+    width: 75%; /* Adjust the width as needed */
     float: left;
   }
   
 /* style.css */
+#starRatingContainer{
+  height:100px;
+}
 
 .selectedPlace {
-  width: 18%; /* Adjust the width as needed */
+  width: 23%; /* Adjust the width as needed */
   margin-left: 2%; /* Adjust the margin as needed */
   float: left;
-  max-height: 70vh;
+  max-height: 75vh;
   background-color: #fff;
   overflow:auto;
   border-radius: 8px;
@@ -151,8 +154,37 @@ body {
 
 .placeDetail {
   background-color: #fff;
-  padding: 10px;
+  padding: 5px;
   margin: 5px;
+}
+
+.hrWithoutMargin{
+  margin-top:0;
+}
+
+.placeDetailsContainer {
+  display: flex;
+}
+
+.leftBlock {
+  flex: 1;
+}
+
+.rightBlock {
+  flex: 1;
+  margin-left: 0px; /* Adjust as needed */
+  border-left: 1px solid #ccc; /* Vertical line */
+  padding-left: 0px; /* Adjust as needed */
+}
+
+.rightBlock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -10px; /* Adjust as needed */
+  width: 1px;
+  background-color: #000000; /* Adjust color as needed */
 }
 
 .detailLabel {
@@ -225,10 +257,36 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
   #map {
     /* Adjust the map styles for smaller screens */
-    height: 65vh; /* Adjust the height as needed */
+    height: 80vh; /* Adjust the height as needed */
     width: 100%; /* Take up the full width of the container */
     float: none; /* Reset the float */
   }
+
+  .marker-rating {
+    margin-bottom: 10px;
+  }
+  
+  .place-info {
+    margin-bottom: 5px;
+  }
+  
+  .rating-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .stars-and-rating {
+    display: flex;
+  }
+  
+  .stars {
+    margin-right: 5px;
+  }
+  
+  .avg-rating {
+    margin-left: 5px;
+  }
+  
 
   .selectedPlace {
     /* Adjust the selectedPlace styles for smaller screens */

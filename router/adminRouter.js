@@ -11,10 +11,7 @@ const requireLogin = (req, res, next) => {
   };
 
 router.get('/', requireLogin, adminController.getAdmin);
-
 router.get('/logout', adminController.logout);
-
 router.post('/updateVisibility', adminController.updateVisibility);
-//router.get('/', adminController.getIndex);
 
 module.exports = router;

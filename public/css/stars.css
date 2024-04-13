@@ -1,0 +1,52 @@
+
+.star-rating {
+    display: inline-block;
+  }
+  
+  .fa-star {
+    cursor: pointer;
+  }
+  
+  .fa-star.fa-solid {
+    color: gold;
+  }
+  
+  .rating {
+    margin-bottom: 5px;
+  }
+  
+  .rating-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+  }
+  
+  .rating-value {
+    font-weight: bold;
+  }
+  
+  .rating-bar {
+    width: 190px;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+  }
+  
+  .progress {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 5px;
+  }
+
+  .rating-info2{
+    display: flex;
+  align-items: center;
+  }
+
+  .avg-rating {
+    margin-right: 10px; /* Adjust the spacing between the average rating and the star icons */
+  }
+
+  .total-rating{
+    margin-left:10px;
+  }

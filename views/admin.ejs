@@ -29,7 +29,7 @@
             <strong>Date:</strong> <%= place.date %>
             <label>
               <strong>Visibility:</strong>
-              <form action="/updateVisibility" method="post">
+              <form action="/admin/updateVisibility" method="post">
                 <input type="hidden" name="placeId" value="<%= place.id %>">
                 <input type="checkbox" value="<%=place.isVisible%>" id="visibilityCheckbox<%= place.id %>" <% if (place.isVisible) { %>checked<% } %>
                  />
